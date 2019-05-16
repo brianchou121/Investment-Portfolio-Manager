@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "advance-river-240406",
+  "private_key_id": "95f29b10ca2f3817d41f70b16ee9537e36926c70",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFnfiVE4The9eX\n+ISB6krrKtC7Xc6B4oNPAxkWTu5IHpLUGc0Wjq77AZnpyTmGyHVA/xh4/JAxjY2a\nogB6rFx/3GCAnHV/HKU/x0Y4njKk/GRPznK1i+X5lrF4OIDkJOENqb8E8icOjXz1\nuedjW8OSOdRhUocZpXo9JAqDxr/FLz0hxaaShGkSrnNBAfK9/AZbnfAm6x458C/K\nkE9dLvqPg4/SXij7Ykr1zVC0iQaR8pkAk+CwJac3W2Y1ZXD6WiNgcgIKP7J8+RyZ\ngFdvCFYuoSGUopNvt9eVicO+WqdthduvOcItg/GgBSXnuXJxgL4VkC5r3RTkgFSA\nDK1jnUvbAgMBAAECggEACXOdRJAK7nfsX1XhDI+mpqnFEvkRG/A4BIrq48DBr8xa\njG9xei832kSA1ogryrECvqmUw5Cc2ungyHEQIc3lnK3vJaeWDQ7TLoI67xFN7csu\nhwyiOuGmjbHx6gSV0ZOb+fnQ640jZhRJUj1ifkOQzokaic8XLBhYiN0U7amPWYBr\nu792ulnRY7cbSsE4sEsqcoOLw0ZBqxjtgQCrigf/JjYzxC9MC50R6xTEQftwNS7i\nIShr2/rsES5uvZzNrQblXtdvi6KARjZiKaq9o/28Y4L0fDzdmoWAS8gkfxJmK3ON\nU0SQZdD5rVA888cUz1AIuKsaCOtFU6h/LCxPjBJMIQKBgQD85Og5Gbjw0rHbxK7/\n94bVatewCDO6IB8eT/cy847iCg7IV9hwWgxxe91/uVmGTei5ByrysTr6QgBmhXql\nQiBm88GKnPIndDi2NdIMG8E/xJ33Yi3Y3ykvvFuvQsySj1PxLE9BFcxQ1Hki81xN\nAUGqM5bfoPGvCeQk9a9l0IKTewKBgQDIC0Ysb3sA4k8+MF5Dte5fUL0+ddvHywlU\n8gddSMpYndjpGILYClCes4APzqiQWF4NizCTJN7+IbQG/jybdysLIv8Vs3SCCGl4\neb11xpFBWm0C+prM/al/7bm3RxbnGmjmPQOa1DnarUDu/AnLCVpP+f/yivITKskJ\njJyZF7YLIQKBgFBywSzo8dwqKkovFzx2EX5yrophEZN0BHIwHgMnV5ywdmNlDoUv\nICY5sQygecovnoi9rvvlRU23EUmLzKglkQkvIbJmmuHSJvhPxrHzYlZWxamcodkL\npJ563O+z4D//OETQQ6YAuS49aQulPweADtOF9cjN+hQkoV7giRtqaR9hAoGBAKsD\nSFhQbV0SGyBVBSDpdQCy6zVsWBjy7+VYiwcqZSFgv8B1ndXG66jgVwgsaVoM0UrO\nxRXlnWSvt1GLIpDdTUTWBC+vHFjVjCTcHiWDPUYbYbn8Nz4rVC3zMqMF+QRURX0e\nh+hiqZrSJgKoIE8cjcJ1PGNCeTP9jaPGO1F9PblBAoGAEIH42ri7Ta7GrsE4Yifa\nPKQENu1Db7zPz8Oo3gaWRD6c70ouuvf5NWVD6ME66/WAJqBR+/7jMAERhev1FcqK\nbpIY2oT3/cL30UDQR/AzPZ7XxnbRQNCzD+Nuisq2f/HBEIH2T+B0Ek2+ushqeVFh\njUtzIZipR/y0ynYhxBgQQdQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "stock-portfolio-manager@advance-river-240406.iam.gserviceaccount.com",
+  "client_id": "105564189486014414148",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/stock-portfolio-manager%40advance-river-240406.iam.gserviceaccount.com"
+}
