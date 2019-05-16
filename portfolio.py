@@ -53,10 +53,12 @@ class InvestmentPortfolio():
                 return True
         return False
 
-    def add_option_purchase(self):
+    def add_option_purchase(self, ticker):
+        #get updated price
+        #update excel sheet
         pass
     
-    def add_share_purchase(self):
+    def add_share_purchase(self, ticker):
         pass
 
     def print_portfolio(self):
