@@ -57,7 +57,7 @@ class InvestmentPortfolio():
 
     def __get_portfolio_range(self):
         """"returns a tuple of (next_new_row, range)"""
-        print('start')
+        print('calculating range')
         self.__validate_google_credentials()
         sheet   = self.service.spreadsheets()
         r = 'A'
@@ -92,11 +92,23 @@ class InvestmentPortfolio():
         print('values:',  [])
         
     def add_share_purchase(self, ticker, category, num_shares, buy_price):
+        ranges          = self.__get_portfolio_range()
         company         = self.investment.get_company_name(ticker)
         ownership       = '[OWN]' #change font color
-        category        = 'STOCK'
+        category        = 'STOCK' #change font color
         current_price   = self.investment.get_current_price(ticker)
-        pass
+        body_request    = { "range": ranges[0],
+                            "majorDimension": 'ROWS',
+                            "values": [
+                                [company, ticker, ownership, category, num_shares, buy_price, current_price]
+                            ]
+                            }
+        #update excel sheet
+        self.__validate_google_credentials()
+        sheet   = self.service.spreadsheets()
+        result  = sheet.values().update(spreadsheetId=self.google_spreadsheet_id,
+                                    range=ranges[0], valueInputOption='USER_ENTERED', body=body_request).execute()
+        print('values:',  [])
 
     def expired_share(self, ticker):
         pass
@@ -146,7 +158,7 @@ class InvestmentPortfolio():
 if __name__ == "__main__":
     test = InvestmentPortfolio()
     ticker = sys.argv[1]
-    #test.add_option_purchase(ticker, 'test test', 10, 2.32)
+    test.add_share_purchase(ticker, 'test test', 10, 2.32)
     if test.company_share_owned(ticker):
         test.print_portfolio()
     else:
