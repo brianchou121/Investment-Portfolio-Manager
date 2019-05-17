@@ -1,7 +1,6 @@
 import requests
 from urllib.parse import urlparse, urlencode, urlunparse
 import sys
-import portfolio
 
 class Investment():
     def __init__(self):
@@ -25,7 +24,10 @@ class Investment():
         #if ticker doesnt exist...
     
     def getCompanyName(self, ticker):
-        pass
+        """gets company name from ticker"""
+        path = '/'.join(['stable','stock', ticker, 'company'])
+        query = self.token
+        return self.connect.get(self.__buildURL(self.iex_url, path, query)).json()['companyName']
 
     def getEarningsReportDate(self, ticker):
         """get upcoming earnings report date information of ticker"""
@@ -40,7 +42,7 @@ class Investment():
     
 
 if __name__ == "__main__":
-    portfolio = portfolio.InvestmentPortfolio()
+    #portfolio = portfolio.InvestmentPortfolio()
     stock = Investment()
     commands = []
     
@@ -52,3 +54,4 @@ if __name__ == "__main__":
         payload = sys.argv[2]
         print(stock.getCurrentPrice(ticker))
         print(stock.getEarningsReportDate(ticker))
+        print(stock.getCompanyName(ticker))

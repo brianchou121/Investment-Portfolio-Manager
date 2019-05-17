@@ -1,12 +1,13 @@
 import sys
 import pickle
 import os.path
+from investment import Investment
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
 #SAMPLE_SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
@@ -19,6 +20,7 @@ class InvestmentPortfolio():
         self.google_sheet_id        = 0
         self.service                = ''
         self.portfolio              = dict() #need to read csv file and then add to it
+        self.investment             = Investment()
     
     def __validate_google_credentials(self):
         """validates user credentials 
@@ -53,12 +55,45 @@ class InvestmentPortfolio():
                 return True
         return False
 
-    def add_option_purchase(self, ticker):
-        #get updated price
-        #update excel sheet
+    def get_new_row(self):
         pass
+
+    def add_option_purchase(self, ticker, category, num_shares, buy_price):
+        company         = self.investment.getCompanyName(ticker)
+        ownership       = '[OWN]' #change font color
+        category        = 'CALL'
+        current_price   = self.investment.getCurrentPrice(ticker)
+        body_request    = { "range": 'G2',
+                            "majorDimension": 'ROWS',
+                            "values": [
+                                [10]
+                            ]
+                            }
+        #update excel sheet
+        self.__validate_google_credentials()
+        sheet   = self.service.spreadsheets()
+        result  = sheet.values().update(spreadsheetId=self.google_spreadsheet_id,
+                                    range='G2', valueInputOption='USER_ENTERED', body=body_request).execute()
+        print('values:',  values)
+        
     
-    def add_share_purchase(self, ticker):
+    def add_share_purchase(self, ticker, category, num_shares, buy_price):
+        company         = self.investment.getCompanyName(ticker)
+        ownership       = '[OWN]' #change font color
+        category        = 'STOCK'
+        current_price   = self.investment.getCurrentPrice(ticker)
+        pass
+
+    def expired_share(self, ticker):
+        pass
+
+    def sold_share(self, ticker):
+        pass
+
+    def loss_color(self):
+        pass
+
+    def gain_color(self):
         pass
 
     def print_portfolio(self):
@@ -95,6 +130,7 @@ if __name__ == "__main__":
     test = InvestmentPortfolio()
     ticker = sys.argv[1]
     if test.company_share_owned(ticker):
+        test.add_option_purchase(ticker, 'test test', 10, 2.32)
         test.print_portfolio()
     else:
         print('You do not own shares of this company yet!')
