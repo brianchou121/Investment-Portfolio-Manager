@@ -12,7 +12,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 # The ID and range of a sample spreadsheet.
 #SAMPLE_SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
 SAMPLE_SPREADSHEET_ID = '1TE4mjYDjDBeLbHbSlOEeU5k-H9lP2A9DEae7sktgGbo'
-SAMPLE_RANGE_NAME = 'A2:H12'
+SAMPLE_RANGE_NAME = 'A2:G12'
 
 class InvestmentPortfolio():
     def __init__(self):
@@ -48,40 +48,54 @@ class InvestmentPortfolio():
         self.__validate_google_credentials()
         sheet   = self.service.spreadsheets()
         result  = sheet.values().get(spreadsheetId=self.google_spreadsheet_id,
-                                    range=SAMPLE_RANGE_NAME).execute()
+                                    range=self.__get_portfolio_range()[1]).execute()
         values  = result.get('values', [])
         for row in values:
             if ticker == row[1]:
                 return True
         return False
 
-    def get_new_row(self):
-        pass
-
+    def __get_portfolio_range(self):
+        """"returns a tuple of (next_new_row, range)"""
+        print('start')
+        self.__validate_google_credentials()
+        sheet   = self.service.spreadsheets()
+        r = 'A'
+        r_num = 2
+        result  = sheet.values().get(spreadsheetId=self.google_spreadsheet_id,
+                                    range=r+str(r_num)).execute()
+        while(len(result.get('values', [])) != 0):
+            r_num += 1
+            result = sheet.values().get(spreadsheetId=self.google_spreadsheet_id,
+                                    range=r+str(r_num)).execute()
+        print('done')
+        return ( r + str(r_num) + ':G' + str(r_num), r + '2:G' + str(r_num-1))
+         
     def add_option_purchase(self, ticker, category, num_shares, buy_price):
-        company         = self.investment.getCompanyName(ticker)
+        """updates sheet with new option purchase info"""
+        ranges          = self.__get_portfolio_range()
+        company         = self.investment.get_company_name(ticker)
         ownership       = '[OWN]' #change font color
-        category        = 'CALL'
-        current_price   = self.investment.getCurrentPrice(ticker)
-        body_request    = { "range": 'G2',
+        category        = 'CALL' #change font color
+        current_price   = self.investment.get_current_price(ticker)
+        body_request    = { "range": ranges[0],
                             "majorDimension": 'ROWS',
                             "values": [
-                                [10]
+                                [company, ticker, ownership, category, num_shares, buy_price, current_price]
                             ]
                             }
         #update excel sheet
         self.__validate_google_credentials()
         sheet   = self.service.spreadsheets()
         result  = sheet.values().update(spreadsheetId=self.google_spreadsheet_id,
-                                    range='G2', valueInputOption='USER_ENTERED', body=body_request).execute()
-        print('values:',  values)
+                                    range=ranges[0], valueInputOption='USER_ENTERED', body=body_request).execute()
+        print('values:',  [])
         
-    
     def add_share_purchase(self, ticker, category, num_shares, buy_price):
-        company         = self.investment.getCompanyName(ticker)
+        company         = self.investment.get_company_name(ticker)
         ownership       = '[OWN]' #change font color
         category        = 'STOCK'
-        current_price   = self.investment.getCurrentPrice(ticker)
+        current_price   = self.investment.get_current_price(ticker)
         pass
 
     def expired_share(self, ticker):
@@ -96,12 +110,15 @@ class InvestmentPortfolio():
     def gain_color(self):
         pass
 
+    def update_price(self, ticker):
+        pass
+
     def print_portfolio(self):
         """printing out values pulled from sheet"""
         self.__validate_google_credentials()
         sheet   = self.service.spreadsheets()
         result  = sheet.values().get(spreadsheetId=self.google_spreadsheet_id,
-                                    range=SAMPLE_RANGE_NAME).execute()
+                                    range=self.__get_portfolio_range()[1]).execute()
         values  = result.get('values', [])
 
         if not values:
@@ -114,7 +131,7 @@ class InvestmentPortfolio():
             print('{:25}    {}'.format('name', 'price'))
             
             for row in values:
-                if len(row) < 8 or row[2] != '[OWN]':
+                if len(row) < 7 or row[2] != '[OWN]':
                     continue
                 else:
                     print('{:25}    {}'.format(row[0], row[6]))
@@ -129,8 +146,8 @@ class InvestmentPortfolio():
 if __name__ == "__main__":
     test = InvestmentPortfolio()
     ticker = sys.argv[1]
+    #test.add_option_purchase(ticker, 'test test', 10, 2.32)
     if test.company_share_owned(ticker):
-        test.add_option_purchase(ticker, 'test test', 10, 2.32)
         test.print_portfolio()
     else:
         print('You do not own shares of this company yet!')

@@ -15,7 +15,7 @@ class Investment():
         deconstructed_base[4] = urlencode(query)
         return urlunparse(deconstructed_base)
 
-    def getCurrentPrice(self, ticker):
+    def get_current_price(self, ticker):
         """get current price (during hours) information of ticker""" #add real time?
         path = '/'.join(['stable','stock', ticker, 'price'])
         query = self.token
@@ -23,19 +23,19 @@ class Investment():
         #return self.connect.get(self.iex_url+ticker+endpoint+self.token).json()
         #if ticker doesnt exist...
     
-    def getCompanyName(self, ticker):
+    def get_company_name(self, ticker):
         """gets company name from ticker"""
         path = '/'.join(['stable','stock', ticker, 'company'])
         query = self.token
         return self.connect.get(self.__buildURL(self.iex_url, path, query)).json()['companyName']
 
-    def getEarningsReportDate(self, ticker):
+    def get_earnings_report_date(self, ticker):
         """get upcoming earnings report date information of ticker"""
         path = '/'.join(['stable','stock', ticker, 'estimates'])
         query = self.token
         return self.connect.get(self.__buildURL(self.iex_url, path, query)).json()['estimates'][0]['reportDate']
 
-    def getUpcomingERs(self, num):
+    def get_upcoming_ers(self, num):
         """get list of num companies upcoming earnings report date"""
         path = '/'.join(['stable','stock', ticker, 'batch'])
         # return self.connect.get(self.iex_url+endpoint+)
@@ -52,6 +52,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         ticker = sys.argv[1]
         payload = sys.argv[2]
-        print(stock.getCurrentPrice(ticker))
-        print(stock.getEarningsReportDate(ticker))
-        print(stock.getCompanyName(ticker))
+        print(stock.get_current_price(ticker))
+        print(stock.get_earnings_report_date(ticker))
+        print(stock.get_company_name(ticker))
