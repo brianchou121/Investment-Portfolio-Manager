@@ -89,7 +89,6 @@ class InvestmentPortfolio():
         sheet   = self.service.spreadsheets()
         result  = sheet.values().update(spreadsheetId=self.google_spreadsheet_id,
                                     range=ranges[0], valueInputOption='USER_ENTERED', body=body_request).execute()
-        print('values:',  [])
         
     def add_share_purchase(self, ticker, category, num_shares, buy_price):
         ranges          = self.__get_portfolio_range()
@@ -108,7 +107,6 @@ class InvestmentPortfolio():
         sheet   = self.service.spreadsheets()
         result  = sheet.values().update(spreadsheetId=self.google_spreadsheet_id,
                                     range=ranges[0], valueInputOption='USER_ENTERED', body=body_request).execute()
-        print('values:',  [])
 
     def expired_share(self, ticker):
         pass
@@ -122,8 +120,27 @@ class InvestmentPortfolio():
     def gain_color(self):
         pass
 
-    def update_price(self, ticker):
-        pass
+    def update_price(self):
+        """updates prices for already owned shares""" #super fucked 
+        #while index not 0
+            #get old price
+            #get new price
+            #update old price with new price
+        self.__validate_google_credentials()
+        sheet   = self.service.spreadsheets()
+        result  = sheet.values().get(spreadsheetId=self.google_spreadsheet_id,
+                                    range='G2').execute()
+        index_letter    = 'G'
+        index_alpha     = 2
+        current_price   = self.investment.get_current_price(ticker)
+        body_request    = { "range": ranges[0],
+                            "majorDimension": 'ROWS',
+                            "values": [
+                                [company, ticker, ownership, category, num_shares, buy_price, current_price]
+                            ]
+                            }
+        result  = sheet.values().update(spreadsheetId=self.google_spreadsheet_id,
+                                    range=ranges[0], valueInputOption='USER_ENTERED', body=body_request).execute()
 
     def print_portfolio(self):
         """printing out values pulled from sheet"""
